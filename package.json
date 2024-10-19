@@ -1,0 +1,13 @@
+{
+  "name": "Logonimo",
+  "version": "0.0.1",
+  "description": "Logonimo is a lightweight and flexible logging library for TypeScript.",
+  "main": "index.js",
+  "repository": "https://github.com/hirotask/Logonimo",
+  "author": "hirotask <hirotaskhashi@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
