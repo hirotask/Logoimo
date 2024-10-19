@@ -11,7 +11,8 @@
 		"vscode": {
 			"extensions": [
 				"esbenp.prettier-vscode",
-				"EditorConfig.EditorConfig"
+				"EditorConfig.EditorConfig",
+				"dbaeumer.vscode-eslint"
 			]
 		}
 	}
