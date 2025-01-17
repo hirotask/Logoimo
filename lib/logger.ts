@@ -1,15 +1,14 @@
-import ExceptionHandler from './exceptionHandler';
-import { Formatter } from './formatter/types';
+import { Formatter } from './formatter';
 import { LogLevel, LogLevelSelector } from './logLevel/index';
 import { LogRecord } from './logRecord';
-import BaseTransport from './transports';
+import Transport from './transports';
 
 export interface LoggerConfig {
     levels: LogLevel;
     levelSelector: LogLevelSelector;
     exitOnError: boolean;
-    exceptionHandlers: ExceptionHandler[];
-    transports: BaseTransport[];
+    exceptionHandlers: Transport[];
+    transports: Transport[];
     formatter: Formatter;
 }
 
@@ -43,11 +42,7 @@ class Logger {
 
     private emit(logRecord: LogRecord): void {
         for (const transport of this.config.transports) {
-            try {
-                transport.log(logRecord, this.config);
-            } catch (error) {
-                console.error(error);
-            }
+            transport.log(logRecord, this.config);
         }
     }
 

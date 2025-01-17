@@ -1,4 +1,4 @@
-import BaseTransport, { TransportContext, TransportOptions } from '.';
+import Transport, { TransportContext, TransportOptions } from '.';
 
 export type ConsoleTransportOptions = TransportOptions & {
     /**
@@ -8,7 +8,7 @@ export type ConsoleTransportOptions = TransportOptions & {
     console?: Console;
 };
 
-class ConsoleTransport extends BaseTransport {
+class ConsoleTransport extends Transport {
     private readonly console: Console;
 
     constructor(options?: ConsoleTransportOptions) {

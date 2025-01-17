@@ -1,5 +1,4 @@
-import ExceptionHandler from '../exceptionHandler';
-import { Formatter } from '../formatter/types';
+import { Formatter } from '../formatter';
 import { LogLevel, LogLevelSelector } from '../logLevel';
 import { LogRecord } from '../logRecord';
 import { LoggerConfig } from '../logger';
@@ -8,7 +7,7 @@ export interface TransportOptions {
     levels?: LogLevel;
     levelSelector?: LogLevelSelector;
     exitOnError?: boolean;
-    exceptionHandlers?: ExceptionHandler[];
+    exceptionHandlers?: Transport[];
     formatter?: Formatter;
 }
 
@@ -17,7 +16,7 @@ export type TransportContext = Required<TransportOptions> &
         logMessage: readonly unknown[];
     };
 
-abstract class BaseTransport {
+abstract class Transport {
     protected readonly options: TransportOptions | null;
 
     constructor(options?: TransportOptions) {
@@ -51,12 +50,22 @@ abstract class BaseTransport {
     public log(logRecord: LogRecord, config: LoggerConfig): void {
         const context = this.createTransportContext(logRecord, config);
 
-        if (context.levelSelector.evaluate(logRecord.level)) {
-            this.doLog(context);
+        try {
+            if (context.levelSelector.evaluate(logRecord.level)) {
+                this.doLog(context);
+            }
+        } catch (error) {
+            if (context.exitOnError) {
+                throw error;
+            } else {
+                for (const exceptionHandler of context.exceptionHandlers) {
+                    exceptionHandler.doLog(context);
+                }
+            }
         }
     }
 
     protected abstract doLog(context: TransportContext): void;
 }
 
-export default BaseTransport;
+export default Transport;
