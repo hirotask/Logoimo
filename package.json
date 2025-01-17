@@ -1,9 +1,9 @@
 {
-    "name": "Logoimo",
+    "name": "Logimo",
     "version": "0.0.1",
-    "description": "Logoimo is a lightweight and flexible logging library for TypeScript.",
+    "description": "Logimo is a lightweight and flexible logging library for TypeScript.",
     "main": "dist/index.js",
-    "repository": "https://github.com/hirotask/Logoimo",
+    "repository": "https://github.com/hirotask/Logimo",
     "author": "hirotask",
     "license": "MIT",
     "private": false,
