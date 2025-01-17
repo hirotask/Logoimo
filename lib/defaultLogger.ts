@@ -1,6 +1,6 @@
 import Logger, { LoggerConfig } from './logger';
 import { LogLevel } from './logLevel';
-import UpperSelector from './logLevel/selector/upperSelector';
+import LowerSelector from './logLevel/selector/lowerSelector';
 import ConsoleTransport from './transports/consoleTransport';
 
 export type DefaultLoggerConfig = Partial<LoggerConfig>;
@@ -20,7 +20,7 @@ class DefaultLogger extends Logger {
         super({
             level:
                 config?.level ??
-                new UpperSelector({
+                new LowerSelector({
                     baseLevel: 'info',
                     logLevels: defaultLogLevels,
                 }),
