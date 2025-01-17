@@ -1,12 +1,22 @@
 {
-    "name": "Logimo",
+    "name": "logimo",
     "version": "0.0.1",
     "description": "Logimo is a lightweight and flexible logging library for TypeScript.",
-    "main": "dist/index.js",
     "repository": "https://github.com/hirotask/Logimo",
     "author": "hirotask",
     "license": "MIT",
     "private": false,
+    "keywords": [
+        "logimo",
+        "logger",
+        "logging",
+        "logs",
+        "sysadmin",
+        "loglevel",
+        "tools",
+        "json",
+        "stream"
+    ],
     "scripts": {
         "build": "tsc --project .",
         "test": "NODE_OPTIONS=--experimental-vm-modules jest ./lib",
