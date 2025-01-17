@@ -1,8 +1,11 @@
-import Logger from './logger';
-import ConsoleTransport from './transports/consoleTransport';
+import DefaultLogger from './defaultLogger';
 
-const logger = new Logger({
-    transports: [new ConsoleTransport({})],
-});
+const logger = new DefaultLogger();
 
+logger.doLog('error', 'Hello world');
+logger.doLog('warn', 'Hello world');
 logger.doLog('info', 'Hello world');
+logger.doLog('http', 'Hello world');
+logger.doLog('verbose', 'Hello world');
+
+logger.doLog('baka', 'Hello world');

@@ -1,26 +1,15 @@
 import ExceptionHandler from './exceptionHandler';
 import { LogLevel, LogLevelSelector } from './logLevel/index';
-import UpperSelector from './logLevel/selector/upperSelector';
 import { LogRecord } from './logRecord';
 import { Transport } from './types';
 
-interface LoggerConfig {
-    levels?: LogLevel;
-    level?: LogLevelSelector;
-    exitOnError?: boolean;
-    exceptionHandlers?: ExceptionHandler[];
+export interface LoggerConfig {
+    levels: LogLevel;
+    level: LogLevelSelector;
+    exitOnError: boolean;
+    exceptionHandlers: ExceptionHandler[];
     transports: Transport[];
 }
-
-const defaultLogLevels: LogLevel = {
-    error: 0,
-    warn: 1,
-    info: 2,
-    http: 3,
-    verbose: 4,
-    debug: 5,
-    silly: 6,
-};
 
 class Logger {
     private readonly levels: LogLevel;
@@ -30,15 +19,10 @@ class Logger {
     private readonly transports: Transport[];
 
     constructor(config: LoggerConfig) {
-        this.levels = config.levels ?? defaultLogLevels;
-        this.level =
-            config.level ??
-            new UpperSelector({
-                logLevels: this.levels,
-                baseLevel: 'info',
-            });
-        this.exitOnError = config.exitOnError ?? false;
-        this.exceptionHandlers = config.exceptionHandlers ?? [];
+        this.levels = config.levels;
+        this.level = config.level;
+        this.exitOnError = config.exitOnError;
+        this.exceptionHandlers = config.exceptionHandlers;
         this.transports = config.transports;
     }
 
