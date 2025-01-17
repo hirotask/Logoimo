@@ -37,7 +37,7 @@ export function defaultConsoleFormatter(record: LogRecord): readonly unknown[] {
         .toString()
         .padStart(3, '0')}`;
     return [
-        `%c${time} %c${record.level} %c${msg}%c`,
+        `%c${time} %c${record.level}: %c${msg}%c`,
         'color: gray;',
         logLevelStyles[record.level],
         'color: gray;',
