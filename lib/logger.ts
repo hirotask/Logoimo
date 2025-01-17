@@ -1,29 +1,23 @@
 import ExceptionHandler from './exceptionHandler';
+import { Formatter } from './formatter/types';
 import { LogLevel, LogLevelSelector } from './logLevel/index';
 import { LogRecord } from './logRecord';
-import { Transport } from './types';
+import BaseTransport from './transports';
 
 export interface LoggerConfig {
     levels: LogLevel;
-    level: LogLevelSelector;
+    levelSelector: LogLevelSelector;
     exitOnError: boolean;
     exceptionHandlers: ExceptionHandler[];
-    transports: Transport[];
+    transports: BaseTransport[];
+    formatter: Formatter;
 }
 
 class Logger {
-    private readonly levels: LogLevel;
-    private readonly level: LogLevelSelector;
-    private readonly exitOnError: boolean;
-    private readonly exceptionHandlers: ExceptionHandler[];
-    private readonly transports: Transport[];
+    private readonly config: LoggerConfig;
 
     constructor(config: LoggerConfig) {
-        this.levels = config.levels;
-        this.level = config.level;
-        this.exitOnError = config.exitOnError;
-        this.exceptionHandlers = config.exceptionHandlers;
-        this.transports = config.transports;
+        this.config = config;
     }
 
     private parseMessage(
@@ -48,9 +42,9 @@ class Logger {
     }
 
     private emit(logRecord: LogRecord): void {
-        for (const transport of this.transports) {
+        for (const transport of this.config.transports) {
             try {
-                transport.log(logRecord);
+                transport.log(logRecord, this.config);
             } catch (error) {
                 console.error(error);
             }
@@ -58,16 +52,15 @@ class Logger {
     }
 
     doLog(level: string, rawMessage?: string, ...properties: unknown[]): void {
-        if (this.level.evaluate(level)) {
-            const message = this.parseMessage(rawMessage, properties);
+        const message = this.parseMessage(rawMessage, properties);
 
-            const record: LogRecord = {
-                level,
-                message,
-                timestamp: Date.now(),
-            };
-            this.emit(record);
-        }
+        const record: LogRecord = {
+            level,
+            message,
+            timestamp: Date.now(),
+        };
+
+        this.emit(record);
     }
 }
 

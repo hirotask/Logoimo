@@ -1,39 +1,32 @@
-import { simpleFormatter } from '../formatter/simpleFormatter';
-import { Formatter } from '../formatter/types';
-import { LogRecord } from '../logRecord';
-import { Transport } from '../types';
+import BaseTransport, { TransportContext, TransportOptions } from '.';
 
-export interface ConsoleTransportOptions {
-    /**
-     * The formatter to use.
-     * Defaults to {@link simpleFormatter}
-     */
-    formatter?: Formatter;
+export type ConsoleTransportOptions = TransportOptions & {
     /**
      * The console to log to.
      * Defaults to {@link console}
      */
     console?: Console;
-}
+};
 
-class ConsoleTransport implements Transport {
-    private readonly formatter: Formatter;
+class ConsoleTransport extends BaseTransport {
     private readonly console: Console;
 
-    constructor(options: ConsoleTransportOptions) {
-        this.formatter = options.formatter ?? simpleFormatter;
-        this.console = options.console ?? globalThis.console;
+    constructor(options?: ConsoleTransportOptions) {
+        super(options);
+        this.console = options?.console ?? globalThis.console;
     }
 
-    log(logRecord: LogRecord): void {
-        const args = this.formatter(logRecord);
-        if (logRecord.level === 'debug') this.console.debug(...args);
-        else if (logRecord.level === 'info') this.console.info(...args);
-        else if (logRecord.level === 'warn') this.console.warn(...args);
-        else if (logRecord.level === 'error' || logRecord.level === 'fatal') {
-            this.console.error(...args);
+    protected doLog(context: TransportContext): void {
+        const level = context.level;
+        const logMessage = context.logMessage;
+
+        if (level === 'debug') this.console.debug(...logMessage);
+        else if (level === 'info') this.console.info(...logMessage);
+        else if (level === 'warn') this.console.warn(...logMessage);
+        else if (level === 'error' || level === 'fatal') {
+            this.console.error(...logMessage);
         } else {
-            this.console.log(...args);
+            this.console.log(...logMessage);
         }
     }
 }

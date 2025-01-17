@@ -1,3 +1,4 @@
+import { simpleFormatter } from './formatter/simpleFormatter';
 import Logger, { LoggerConfig } from './logger';
 import { LogLevel } from './logLevel';
 import LowerSelector from './logLevel/selector/lowerSelector';
@@ -18,8 +19,8 @@ export const defaultLogLevels: LogLevel = {
 class DefaultLogger extends Logger {
     constructor(config?: DefaultLoggerConfig) {
         super({
-            level:
-                config?.level ??
+            levelSelector:
+                config?.levelSelector ??
                 new LowerSelector({
                     baseLevel: 'info',
                     logLevels: defaultLogLevels,
@@ -27,7 +28,8 @@ class DefaultLogger extends Logger {
             levels: config?.levels ?? defaultLogLevels,
             exitOnError: config?.exitOnError ?? true,
             exceptionHandlers: config?.exceptionHandlers ?? [],
-            transports: config?.transports ?? [new ConsoleTransport({})],
+            transports: config?.transports ?? [new ConsoleTransport()],
+            formatter: config?.formatter ?? simpleFormatter,
         });
     }
 }
