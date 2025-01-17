@@ -1,14 +1,14 @@
-import { defaultConsoleFormatter } from '../formatter/defaultFormatter';
-import { ConsoleFormatter } from '../formatter/types';
+import { simpleFormatter } from '../formatter/simpleFormatter';
+import { Formatter } from '../formatter/types';
 import { LogRecord } from '../logRecord';
 import { Transport } from '../types';
 
 export interface ConsoleTransportOptions {
     /**
      * The formatter to use.
-     * Defaults to {@link defaultConsoleFormatter}
+     * Defaults to {@link simpleFormatter}
      */
-    formatter?: ConsoleFormatter;
+    formatter?: Formatter;
     /**
      * The console to log to.
      * Defaults to {@link console}
@@ -17,11 +17,11 @@ export interface ConsoleTransportOptions {
 }
 
 class ConsoleTransport implements Transport {
-    private readonly formatter: ConsoleFormatter;
+    private readonly formatter: Formatter;
     private readonly console: Console;
 
     constructor(options: ConsoleTransportOptions) {
-        this.formatter = options.formatter ?? defaultConsoleFormatter;
+        this.formatter = options.formatter ?? simpleFormatter;
         this.console = options.console ?? globalThis.console;
     }
 

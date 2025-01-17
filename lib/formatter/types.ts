@@ -1,3 +1,3 @@
 import { LogRecord } from '../logRecord';
 
-export type ConsoleFormatter = (logRecord: LogRecord) => readonly unknown[];
+export type Formatter = (logRecord: LogRecord) => readonly unknown[];

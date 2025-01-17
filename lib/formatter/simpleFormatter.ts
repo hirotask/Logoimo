@@ -15,7 +15,7 @@ const logLevelStyles: Record<string, string> = {
  * @returns The formatted log record, as an array of arguments for
  *          {@link console.log}.
  */
-export function defaultConsoleFormatter(record: LogRecord): readonly unknown[] {
+export function simpleFormatter(record: LogRecord): readonly unknown[] {
     let msg = '';
     const values: unknown[] = [];
     for (let i = 0; i < record.message.length; i++) {
