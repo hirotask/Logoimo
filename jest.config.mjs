@@ -12,6 +12,7 @@ const config = {
             },
         ],
     },
+    testPathIgnorePatterns: ['dist'],
 };
 
 export default config;
