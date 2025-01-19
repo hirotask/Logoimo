@@ -10,7 +10,7 @@
         "declaration": true,
         "pretty": true,
         "newLine": "lf",
-        "outDir": "dist/lib",
+        "outDir": "dist/example",
         "removeComments": true
     },
     "exclude": [
@@ -20,5 +20,5 @@
         "**/tests",
         "*.test.ts"
     ],
-    "include": ["lib/**/*.ts"]
+    "include": ["example/**/*.ts"]
 }
