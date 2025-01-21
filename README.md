@@ -14,3 +14,7 @@ Coming soon...
 ## Docs
 
 Coming soon...
+
+## Contribution
+
+See [Contribuing Guide](./doc-for-developers/en/CONTRIBUTING.md).
